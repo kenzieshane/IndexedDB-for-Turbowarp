@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IndexedDB Extension for TurboWarp</title>
+    <style>
+        :root {
+            --primary: #4a6fa5;
+            --secondary: #ff9c1a;
+            --dark: #1a1a2e;
+            --light: #f8f9fa;
+            --success: #28a745;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            max-width: 800px;
+            margin: 0 auto 1.5rem;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            background-color: white;
+            color: var(--primary);
+            padding: 0.8rem 1.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            margin: 0.5rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+        }
+        
+        .cta-button.secondary {
+            background-color: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+        
+        section {
+            padding: 3rem 0;
+            border-bottom: 1px solid #eee;
+        }
+        
+        h2 {
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            font-size: 2rem;
+            text-align: center;
+        }
+        
+        h3 {
+            color: var(--secondary);
+            margin: 1.5rem 0 1rem;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .feature-card {
+            background: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+        }
+        
+        .feature-card i {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+            display: block;
+        }
+        
+        .code-block {
+            background-color: #f5f5f5;
+            border-radius: 6px;
+            padding: 1rem;
+            font-family: 'Courier New', Courier, monospace;
+            overflow-x: auto;
+            margin: 1rem 0;
+            border-left: 4px solid var(--secondary);
+        }
+        
+        .example {
+            background-color: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+        }
+        
+        .block-preview {
+            background-color: #e9f5ff;
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1rem 0;
+            font-family: 'Courier New', Courier, monospace;
+            border-left: 4px solid var(--primary);
+        }
+        
+        footer {
+            background-color: var(--dark);
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 2rem;
+        }
+        
+        @media (max-width: 768px) {
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>IndexedDB Extension for TurboWarp</h1>
+            <p class="subtitle">Powerful client-side database storage for your Scratch projects. Save game progress, user preferences, and more!</p>
+            <div>
+                <a href="#install" class="cta-button">Get Started</a>
+                <a href="#examples" class="cta-button secondary">See Examples</a>
+            </div>
+        </div>
+    </header>
+    
+    <section id="features">
+        <div class="container">
+            <h2>Why Use IndexedDB?</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <i class="fas fa-database"></i>
+                    <h3>Persistent Storage</h3>
+                    <p>Save data that persists between sessions, even when the browser is closed.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-tachometer-alt"></i>
+                    <h3>Large Capacity</h3>
+                    <p>Store significantly more data than localStorage (typically 50% of disk space).</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-search"></i>
+                    <h3>Fast Indexed Queries</h3>
+                    <p>Quickly find data using indexed properties for better performance.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-mobile-alt"></i>
+                    <h3>Offline Support</h3>
+                    <p>Perfect for Progressive Web Apps (PWAs) and offline-capable projects.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-table"></i>
+                    <h3>Structured Data</h3>
+                    <p>Store complex objects instead of just strings like in localStorage.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-shield-alt"></i>
+                    <h3>Secure</h3>
+                    <p>Data is sandboxed to your domain and can't be accessed by other sites.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section id="install">
+        <div class="container">
+            <h2>Installation</h2>
+            <p>To use the IndexedDB extension in TurboWarp:</p>
+            
+            <div class="example">
+                <h3>Method 1: Load from URL</h3>
+                <ol>
+                    <li>Open your project in TurboWarp</li>
+                    <li>Click "Extensions" in the toolbar</li>
+                    <li>Select "Load Extension"</li>
+                    <li>Enter the extension URL (host this file somewhere)</li>
+                </ol>
+            </div>
+            
+            <div class="example">
+                <h3>Method 2: Manual Setup</h3>
+                <p>Copy this JavaScript code into a new extension file:</p>
+                <div class="code-block" id="full-code">
+                    // The full extension code would go here
+                    // (This would be populated by JavaScript)
+                </div>
+                <button onclick="copyCode()" class="cta-button" style="background-color: var(--success); color: white;">
+                    <i class="fas fa-copy"></i> Copy Code
+                </button>
+            </div>
+        </div>
+    </section>
+    
+    <section id="documentation">
+        <div class="container">
+            <h2>Documentation</h2>
+            
+            <h3>Database Management</h3>
+            <div class="block-preview">
+                open database [name] version [1]
+            </div>
+            <p>Opens or creates a database. Version must be an integer (increase when changing structure).</p>
+            
+            <div class="block-preview">
+                delete entire database [name]
+            </div>
+            <p>Permanently removes a database and all its data.</p>
+            
+            <div class="block-preview">
+                list all databases
+            </div>
+            <p>Returns a list of all available databases (reporter block).</p>
+            
+            <h3>Store (Table) Management</h3>
+            <div class="block-preview">
+                create store [name] with options [options]
+            </div>
+            <p>Creates a new object store. Options can specify key paths and auto-increment settings.</p>
+            
+            <div class="block-preview">
+                delete store [name]
+            </div>
+            <p>Removes an object store and all its data.</p>
+            
+            <div class="block-preview">
+                clear ALL records in [store]
+            </div>
+            <p>Deletes all data in a store while keeping the store itself.</p>
+            
+            <h3>Data Operations</h3>
+            <div class="block-preview">
+                store in [store] key [key] value [value]
+            </div>
+            <p>Saves data with a specific key for later retrieval.</p>
+            
+            <div class="block-preview">
+                get from [store] key [key]
+            </div>
+            <p>Retrieves previously stored data (reporter block).</p>
+        </div>
+    </section>
+    
+    <section id="examples">
+        <div class="container">
+            <h2>Example Projects</h2>
+            
+            <div class="example">
+                <h3>Game Save System</h3>
+                <div class="code-block">
+when green flag clicked
+open database "game_saves" version 1
+wait until &lt;not &lt;(current database) = [null]>> // Wait for DB to load
+                </div>
+                
+                <div class="code-block">
+when [s v] key pressed // Save game
+store in "player" key "level" value (level)
+store in "player" key "score" value (score)
+store in "player" key "inventory" value (inventory)
+                </div>
+                
+                <div class="code-block">
+when [l v] key pressed // Load game
+set [level] to (get from "player" key "level")
+set [score] to (get from "player" key "score")
+set [inventory] to (get from "player" key "inventory")
+                </div>
+            </div>
+            
+            <div class="example">
+                <h3>User Preferences</h3>
+                <div class="code-block">
+when green flag clicked
+open database "settings" version 1
+                </div>
+                
+                <div class="code-block">
+when [volume v] slider changed // Save volume
+store in "prefs" key "volume" value (volume)
+                </div>
+                
+                <div class="code-block">
+when I receive [load settings]
+set [volume] to (get from "prefs" key "volume")
+set [theme] to (get from "prefs" key "theme")
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section>
+        <div class="container">
+            <h2>Frequently Asked Questions</h2>
+            
+            <div class="example">
+                <h3>Where is the data stored?</h3>
+                <p>Data is stored in the browser's IndexedDB system, which persists even after closing the browser.</p>
+            </div>
+            
+            <div class="example">
+                <h3>Is there a storage limit?</h3>
+                <p>Most browsers allow up to 50% of disk space, but exact limits vary by browser and device.</p>
+            </div>
+            
+            <div class="example">
+                <h3>Can I share data between different projects?</h3>
+                <p>Yes, if they use the same database name and are hosted on the same domain.</p>
+            </div>
+        </div>
+    </section>
+    
+    <footer>
+        <div class="container">
+            <p>IndexedDB Extension for TurboWarp</p>
+            <p>Created with ❤️ for Scratch enthusiasts</p>
+            <p>Free to use and modify</p>
+        </div>
+    </footer>
+    
+    <script>
+        // This would contain the actual extension code
+        const extensionCode = `class IndexedDBExtension {
+    constructor(runtime) {
+        this.runtime = runtime;
+        this.databases = {};
+        this.currentDB = null;
+    }
+
+    getInfo() {
+        return {
+            id: 'indexeddb',
+            name: 'IndexedDB',
+            blocks: [
+                // All the extension blocks would be here
+                // (Full implementation from previous messages)
+            ]
+        };
+    }
+
+    // All the methods would be here
+    // (Full implementation from previous messages)
+}`;
+
+        // Display the code in the code block
+        document.getElementById('full-code').textContent = extensionCode;
+        
+        // Copy functionality
+        function copyCode() {
+            navigator.clipboard.writeText(extensionCode).then(() => {
+                alert('Code copied to clipboard!');
+            }).catch(err => {
+                console.error('Failed to copy: ', err);
+            });
+        }
+    </script>
+</body>
+</html>
