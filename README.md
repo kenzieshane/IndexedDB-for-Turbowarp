@@ -1,4 +1,3 @@
-# IndexedDB-for-Turbowarp
 # **IndexedDB Extension for TurboWarp**  
 **A powerful database system for Scratch projects!**  
 
