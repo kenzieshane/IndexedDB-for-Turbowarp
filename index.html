@@ -4,124 +4,259 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>IndexedDB Extension for TurboWarp</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-   :root {
-    --primary: #ffffff;  /* White accent */
-    --secondary: #ff9c1a; /* Keeping orange as secondary */
-    --dark: #121212;    /* Dark background */
-    --light: #1e1e1e;   /* Slightly lighter dark for cards */
-    --text: #e0e0e0;    /* Light text */
-    --success: #4caf50; /* Green for success actions */
-}
+        :root {
+            --primary: #ffffff;
+            --secondary: #ff9c1a;
+            --dark: #121212;
+            --light: #1e1e1e;
+            --text: #e0e0e0;
+            --success: #4caf50;
+            --font-family: 'Inter', sans-serif; /* Use Inter as the primary font */
+        }
 
-/* Layout-preserving dark mode styles */
-body {
-    background-color: var(--dark);
-    color: var(--text);
-    /* Preserving original font and spacing */
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    line-height: 1.6;
-    margin: 0;
-    padding: 0;
-}
+        body {
+            background-color: var(--dark);
+            color: var(--text);
+            font-family: var(--font-family);
+            line-height: 1.7; /* Improved line height for better readability */
+            margin: 0;
+            padding: 0;
+        }
 
-.container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 2rem; /* Original container padding */
-}
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
 
-header {
-    background: linear-gradient(135deg, #2a2a2a, #121212);
-    color: var(--primary);
-    padding: 2rem 0; /* Original header padding */
-    text-align: center;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-}
+        header {
+            background: linear-gradient(135deg, #2a2a2a, #121212);
+            color: var(--primary);
+            padding: 4rem 0; /* Increased header padding for a more spacious feel */
+            text-align: center;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.1); /* Slightly stronger shadow */
+        }
 
-h1 {
-    font-size: 2.5rem;
-    margin-bottom: 1rem;
-}
+        h1 {
+            font-size: 3rem; /* Larger heading for impact */
+            margin-bottom: 1.5rem; /* Increased margin */
+            font-weight: 700; /* Use a bold font weight for headings */
+            letter-spacing: -0.02em;
+        }
 
-h2 {
-    font-size: 2rem;
-    margin-bottom: 1.5rem;
-}
+        .subtitle {
+            font-size: 1.25rem; /* Slightly larger subtitle */
+            color: #d1d1d1;
+            margin-bottom: 2rem; /* Increased margin */
+            max-width: 80%; /* Improved max-width for better readability on larger screens */
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.8;
+        }
 
-h3 {
-    font-size: 1.3rem;
-    margin: 1.5rem 0 1rem;
-}
+        h2 {
+            font-size: 2.25rem; /* Larger heading */
+            margin-bottom: 2rem; /* Increased margin */
+            font-weight: 600;
+            letter-spacing: -0.02em;
+            color: var(--primary);
+            text-align: center; /* Center headings */
+        }
 
-/* Feature cards - keeping original layout */
-.features-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 2rem;
-    margin-top: 2rem;
-}
+        h3 {
+            font-size: 1.5rem; /* Larger heading */
+            margin: 2rem 0 1.25rem; /* Increased margins */
+            font-weight: 600;
+            letter-spacing: -0.02em;
+            color: var(--primary);
+        }
 
-.feature-card {
-    background: var(--light);
-    border-radius: 8px;
-    padding: 1.5rem;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
-    transition: transform 0.3s ease;
-    /* Keeping original layout */
-    margin: 0;
-}
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); /* Slightly wider cards */
+            gap: 2.5rem; /* Increased gap */
+            margin-top: 3rem; /* Increased margin */
+        }
 
-/* Code blocks - same spacing, dark colors */
-.code-block {
-    background-color: #252525;
-    border-radius: 6px;
-    padding: 1rem;
-    font-family: 'Courier New', Courier, monospace;
-    overflow-x: auto;
-    margin: 1rem 0;
-    border-left: 4px solid var(--primary);
-}
+        .feature-card {
+            background: var(--light);
+            border-radius: 10px; /* Slightly more rounded corners */
+            padding: 2rem; /* Increased padding */
+            box-shadow: 0 6px 12px rgba(0,0,0,0.3); /* Slightly stronger shadow */
+            transition: transform 0.3s ease, box-shadow 0.3s ease; /* Added box-shadow transition */
+            margin: 0;
+        }
 
-/* Buttons - same size, dark mode colors */
-.cta-button {
-    display: inline-block;
-    background-color: var(--primary);
-    color: var(--dark);
-    padding: 0.8rem 1.5rem;
-    border-radius: 50px;
-    text-decoration: none;
-    font-weight: bold;
-    margin: 0.5rem;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-}
+        .feature-card:hover {
+            transform: translateY(-8px); /* Increased hover effect */
+            box-shadow: 0 8px 20px rgba(0,0,0,0.4); /* Increased shadow on hover */
+        }
 
-/* Sections - same spacing */
-section {
-    padding: 3rem 0;
-    border-bottom: 1px solid #333;
-}
+        .feature-card i {
+            font-size: 2.5rem; /* Larger icon */
+            margin-bottom: 1rem;
+            color: var(--secondary);
+        }
 
-/* Footer - same padding */
-footer {
-    padding: 2rem 0;
-}
+        .feature-card h3 {
+            font-size: 1.5rem; /* Larger heading */
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
 
-/* Responsive design - same breakpoints */
-@media (max-width: 768px) {
-    .features-grid {
-        grid-template-columns: 1fr;
-    }
-    
-    h1 {
-        font-size: 2rem;
-    }
-    
-    .container {
-        padding: 0 1rem;
-    }
-}
+        .feature-card p {
+            font-size: 1.1rem; /* Slightly larger text */
+            line-height: 1.8; /* Improved line height */
+            color: #d1d1d1;
+        }
+
+        .code-block {
+            background-color: #252525;
+            border-radius: 8px; /* More rounded corners */
+            padding: 1.5rem; /* Increased padding */
+            font-family: 'Courier New', Courier, monospace;
+            overflow-x: auto;
+            margin: 1.5rem 0; /* Increased margin */
+            border-left: 4px solid var(--secondary); /* Accent color */
+            font-size: 1rem; /* Increased font size */
+            line-height: 1.6;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background-color: var(--primary);
+            color: var(--dark);
+            padding: 0.8rem 2rem; /* Slightly increased horizontal padding */
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600; /* Medium font weight */
+            margin: 0.75rem; /* Increased margin */
+            transition: all 0.3s ease;
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15); /* Slightly stronger shadow */
+            font-size: 1.1rem;
+        }
+
+        .cta-button:hover {
+            background-color: #f5f5f5; /* Slightly lighter hover */
+            transform: translateY(-4px);
+            box-shadow: 0 8px 15px rgba(0,0,0,0.2);
+        }
+
+        .cta-button.secondary {
+            background-color: var(--secondary);
+            color: var(--primary);
+        }
+
+        .cta-button.secondary:hover {
+            background-color: #e58e00;
+        }
+
+        section {
+            padding: 4rem 0; /* Increased section padding */
+            border-bottom: 1px solid #333;
+        }
+
+        section:last-of-type {
+            border-bottom: none;
+        }
+
+        footer {
+            padding: 3rem 0; /* Increased footer padding */
+            text-align: center;
+            color: #b1b1b1;
+            font-size: 1rem;
+        }
+
+        footer p {
+            margin-bottom: 0.75rem;
+        }
+
+        .example {
+            background-color: var(--light);
+            border-radius: 10px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+        }
+
+        .example h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1.25rem;
+            color: var(--secondary);
+        }
+
+        .example p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #d1d1d1;
+        }
+
+        .block-preview {
+            background-color: #333;
+            border-radius: 8px;
+            padding: 1.25rem;
+            margin: 1rem 0;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 1.1rem;
+            color: #fff;
+            overflow-x: auto;
+            border-left: 4px solid var(--primary);
+            line-height: 1.6;
+        }
+
+        #full-code {
+            background-color: #252525;
+            border-radius: 8px;
+            padding: 1.5rem;
+            font-family: 'Courier New', Courier, monospace;
+            overflow-x: auto;
+            margin: 1.5rem 0;
+            border-left: 4px solid var(--success);
+            font-size: 1rem;
+            line-height: 1.6;
+            color: #fff;
+        }
+
+        @media (max-width: 768px) {
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            h1 {
+                font-size: 2.5rem;
+            }
+
+            .subtitle {
+                font-size: 1.2rem;
+                max-width: 95%;
+            }
+
+            h2 {
+                font-size: 2rem;
+            }
+
+            .container {
+                padding: 0 1rem;
+            }
+
+            .cta-button {
+                font-size: 1rem;
+                padding: 0.75rem 1.5rem;
+            }
+
+            .feature-card p {
+                font-size: 1rem;
+            }
+        }
+
+        /* Added to improve copy button appearance */
+        .cta-button i {
+            margin-right: 0.5rem;
+        }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
@@ -129,17 +264,17 @@ footer {
     <header>
         <div class="container">
             <h1>IndexedDB Extension for TurboWarp</h1>
-            <p class="subtitle">Powerful client-side database storage for your Scratch projects. Save game progress, user preferences, and more!</p>
+            <p class="subtitle">Supercharge your TurboWarp projects with persistent, high-capacity client-side storage.</p>
             <div>
                 <a href="#install" class="cta-button">Get Started</a>
                 <a href="#examples" class="cta-button secondary">See Examples</a>
             </div>
         </div>
     </header>
-    
+
     <section id="features">
         <div class="container">
-            <h2>Why Use IndexedDB?</h2>
+            <h2>Key Features</h2>
             <div class="features-grid">
                 <div class="feature-card">
                     <i class="fas fa-database"></i>
@@ -174,377 +309,27 @@ footer {
             </div>
         </div>
     </section>
-    
+
     <section id="install">
         <div class="container">
             <h2>Installation</h2>
-            <p>To use the IndexedDB extension in TurboWarp:</p>
-            
+            <p>Get started with the IndexedDB extension in TurboWarp using one of the following methods:</p>
+
             <div class="example">
                 <h3>Method 1: Load from URL</h3>
                 <ol>
-                    <li>Open your project in TurboWarp</li>
-                    <li>Click "Extensions" in the toolbar</li>
-                    <li>Select "Load Extension"</li>
-                    <li>Enter the extension URL (indexeddb.kenzieshane.my.id/indexeddb.js)</li>
+                    <li>Open your project in TurboWarp.</li>
+                    <li>Click "Extensions" in the toolbar.</li>
+                    <li>Select "Load Extension".</li>
+                    <li>Enter the extension URL: <span style="font-family: monospace; color: #ffdb58;">indexeddb.kenzieshane.my.id/indexeddb.js</span></li>
                 </ol>
             </div>
-            
+
             <div class="example">
                 <h3>Method 2: Manual Setup</h3>
-                <p>Copy this JavaScript code into a new extension file:</p>
+                <p>Copy the following JavaScript code into a new extension file:</p>
                 <div class="code-block" id="full-code">
-                    class IndexedDBExtension {
-  constructor(runtime) {
-    this.runtime = runtime;
-    this.databases = {};
-    this.currentDB = null;
-  }
-
-  getInfo() {
-    return {
-      id: 'indexeddb',
-      name: 'IndexedDB',
-      blocks: [
-        // Database Management
-        {
-          opcode: 'openDatabase',
-          blockType: Scratch.BlockType.COMMAND,
-          text: 'open database [name] version [version]',
-          arguments: {
-            name: {
-              type: Scratch.ArgumentType.STRING,
-              defaultValue: 'scratch_data'
-            },
-            version: {
-              type: Scratch.ArgumentType.NUMBER,
-              defaultValue: 1
-            }
-          }
-        },
-        {
-          opcode: 'deleteDatabase',
-          blockType: Scratch.BlockType.COMMAND,
-          text: 'delete entire database [name]',
-          arguments: {
-            name: {
-              type: Scratch.ArgumentType.STRING,
-              defaultValue: 'scratch_data'
-            }
-          }
-        },
-        {
-          opcode: 'listDatabases',
-          blockType: Scratch.BlockType.REPORTER,
-          text: 'list all databases'
-        },
-
-        // Store Management
-        {
-          opcode: 'listStores',
-          blockType: Scratch.BlockType.REPORTER,
-          text: 'list all stores in current database'
-        },
-        {
-          opcode: 'createStore',
-          blockType: Scratch.BlockType.COMMAND,
-          text: 'create store [storeName] with options [options]',
-          arguments: {
-            storeName: {
-              type: Scratch.ArgumentType.STRING,
-              defaultValue: 'new_store'
-            },
-            options: {
-              type: Scratch.ArgumentType.STRING,
-              defaultValue: 'keyPath: "id", autoIncrement: true'
-            }
-          }
-        },
-        {
-          opcode: 'deleteStore',
-          blockType: Scratch.BlockType.COMMAND,
-          text: 'delete store [storeName]',
-          arguments: {
-            storeName: {
-              type: Scratch.ArgumentType.STRING,
-              defaultValue: 'old_data'
-            }
-          }
-        },
-        {
-          opcode: 'countRecords',
-          blockType: Scratch.BlockType.REPORTER,
-          text: 'count records in [storeName]',
-          arguments: {
-            storeName: {
-              type: Scratch.ArgumentType.STRING,
-              defaultValue: 'default'
-            }
-          }
-        },
-        {
-          opcode: 'clearStore',
-          blockType: Scratch.BlockType.COMMAND,
-          text: 'clear ALL records in [storeName]',
-          arguments: {
-            storeName: {
-              type: Scratch.ArgumentType.STRING,
-              defaultValue: 'default'
-            }
-          }
-        },
-
-        // Data Operations
-        {
-          opcode: 'storeData',
-          blockType: Scratch.BlockType.COMMAND,
-          text: 'store in [storeName] key [key] value [value]',
-          arguments: {
-            storeName: {
-              type: Scratch.ArgumentType.STRING,
-              defaultValue: 'default'
-            },
-            key: {
-              type: Scratch.ArgumentType.STRING,
-              defaultValue: 'myKey'
-            },
-            value: {
-              type: Scratch.ArgumentType.STRING,
-              defaultValue: 'myValue'
-            }
-          }
-        },
-        {
-          opcode: 'getData',
-          blockType: Scratch.BlockType.REPORTER,
-          text: 'get from [storeName] key [key]',
-          arguments: {
-            storeName: {
-              type: Scratch.ArgumentType.STRING,
-              defaultValue: 'default'
-            },
-            key: {
-              type: Scratch.ArgumentType.STRING,
-              defaultValue: 'myKey'
-            }
-          }
-        }
-      ],
-      menus: {
-        options: {
-          acceptReporters: true,
-          items: [
-            'keyPath: "id", autoIncrement: false',
-            'keyPath: "id", autoIncrement: true',
-            'keyPath: null, autoIncrement: true'
-          ]
-        }
-      }
-    };
-  }
-
-  // Database Operations
-  openDatabase(args) {
-    return new Promise((resolve) => {
-      const request = indexedDB.open(args.name, args.version);
-      
-      request.onupgradeneeded = (event) => {
-        const db = event.target.result;
-        if (!db.objectStoreNames.contains('default')) {
-          db.createObjectStore('default');
-        }
-      };
-      
-      request.onsuccess = (event) => {
-        this.currentDB = event.target.result;
-        this.databases[args.name] = this.currentDB;
-        resolve();
-      };
-      
-      request.onerror = (event) => {
-        console.error('Database error:', event.target.error);
-        resolve();
-      };
-    });
-  }
-
-  deleteDatabase(args) {
-    return new Promise((resolve) => {
-      if (this.currentDB && this.currentDB.name === args.name) {
-        this.currentDB.close();
-        this.currentDB = null;
-      }
-      
-      const request = indexedDB.deleteDatabase(args.name);
-      
-      request.onsuccess = () => {
-        delete this.databases[args.name];
-        resolve();
-      };
-      
-      request.onerror = (event) => {
-        console.error('Delete error:', event.target.error);
-        resolve();
-      };
-    });
-  }
-
-  listDatabases() {
-    return new Promise((resolve) => {
-      // Note: This uses a non-standard but widely supported method
-      if (indexedDB.databases) {
-        indexedDB.databases().then(dbs => {
-          resolve(dbs.map(db => db.name).join(', '));
-        }).catch(() => resolve(''));
-      } else {
-        // Fallback: Only list databases we've opened
-        resolve(Object.keys(this.databases).join(', '));
-      }
-    });
-  }
-
-  // Store Operations
-  listStores() {
-    if (!this.currentDB) return '';
-    return Array.from(this.currentDB.objectStoreNames).join(', ');
-  }
-
-  createStore(args) {
-    return new Promise((resolve) => {
-      if (!this.currentDB) {
-        resolve();
-        return;
-      }
-      
-      const db = this.currentDB;
-      const version = db.version + 1;
-      db.close();
-      
-      const req = indexedDB.open(db.name, version);
-      
-      req.onupgradeneeded = (event) => {
-        const db = event.target.result;
-        if (!db.objectStoreNames.contains(args.storeName)) {
-          try {
-            const options = JSON.parse(`{${args.options}}`);
-            db.createObjectStore(args.storeName, options);
-          } catch (e) {
-            db.createObjectStore(args.storeName);
-          }
-        }
-      };
-      
-      req.onsuccess = (event) => {
-        this.currentDB = event.target.result;
-        this.databases[db.name] = this.currentDB;
-        resolve();
-      };
-    });
-  }
-
-  deleteStore(args) {
-    return new Promise((resolve) => {
-      if (!this.currentDB) {
-        resolve();
-        return;
-      }
-      
-      const db = this.currentDB;
-      const version = db.version + 1;
-      db.close();
-      
-      const req = indexedDB.open(db.name, version);
-      
-      req.onupgradeneeded = (event) => {
-        const db = event.target.result;
-        if (db.objectStoreNames.contains(args.storeName)) {
-          db.deleteObjectStore(args.storeName);
-        }
-      };
-      
-      req.onsuccess = (event) => {
-        this.currentDB = event.target.result;
-        resolve();
-      };
-    });
-  }
-
-  countRecords(args) {
-    return new Promise((resolve) => {
-      if (!this.currentDB) {
-        resolve(0);
-        return;
-      }
-      
-      const transaction = this.currentDB.transaction(args.storeName, 'readonly');
-      const store = transaction.objectStore(args.storeName);
-      const request = store.count();
-      
-      request.onsuccess = () => {
-        resolve(request.result);
-      };
-      
-      request.onerror = () => {
-        resolve(0);
-      };
-    });
-  }
-
-  clearStore(args) {
-    return new Promise((resolve) => {
-      if (!this.currentDB) {
-        resolve();
-        return;
-      }
-      
-      const transaction = this.currentDB.transaction(args.storeName, 'readwrite');
-      const store = transaction.objectStore(args.storeName);
-      const request = store.clear();
-      
-      request.onsuccess = () => {
-        resolve();
-      };
-      
-      request.onerror = () => {
-        resolve();
-      };
-    });
-  }
-
-  // Data Operations
-  storeData(args) {
-    if (!this.currentDB) return Promise.resolve();
-    
-    return new Promise((resolve) => {
-      const transaction = this.currentDB.transaction(args.storeName, 'readwrite');
-      const store = transaction.objectStore(args.storeName);
-      store.put(args.value, args.key);
-      
-      transaction.oncomplete = () => resolve();
-      transaction.onerror = () => resolve();
-    });
-  }
-
-  getData(args) {
-    if (!this.currentDB) return Promise.resolve('');
-    
-    return new Promise((resolve) => {
-      const transaction = this.currentDB.transaction(args.storeName, 'readonly');
-      const store = transaction.objectStore(args.storeName);
-      const request = store.get(args.key);
-      
-      request.onsuccess = () => {
-        resolve(request.result != null ? request.result : '');
-      };
-      
-      request.onerror = () => {
-        resolve('');
-      };
-    });
-  }
-}
-
-Scratch.extensions.register(new IndexedDBExtension());
+                    // The extension code will be placed here
                 </div>
                 <button onclick="copyCode()" class="cta-button" style="background-color: var(--success); color: white;">
                     <i class="fas fa-copy"></i> Copy Code
@@ -552,125 +337,121 @@ Scratch.extensions.register(new IndexedDBExtension());
             </div>
         </div>
     </section>
-    
+
     <section id="documentation">
         <div class="container">
             <h2>Documentation</h2>
-            
+
             <h3>Database Management</h3>
             <div class="block-preview">
                 open database [name] version [1]
             </div>
-            <p>Opens or creates a database. Version must be an integer (increase when changing structure).</p>
-            
+            <p>Opens or creates a database.  Version must be an integer (increase when changing the database structure).</p>
+
             <div class="block-preview">
                 delete entire database [name]
             </div>
             <p>Permanently removes a database and all its data.</p>
-            
+
             <div class="block-preview">
                 list all databases
             </div>
             <p>Returns a list of all available databases (reporter block).</p>
-            
+
             <h3>Store (Table) Management</h3>
             <div class="block-preview">
                 create store [name] with options [options]
             </div>
-            <p>Creates a new object store. Options can specify key paths and auto-increment settings.</p>
-            
+            <p>Creates a new object store. Options can specify key paths and auto-increment settings (e.g., <code style="font-family: monospace;">keyPath: "id", autoIncrement: true</code>).</p>
+
             <div class="block-preview">
                 delete store [name]
             </div>
             <p>Removes an object store and all its data.</p>
-            
+
             <div class="block-preview">
                 clear ALL records in [store]
             </div>
             <p>Deletes all data in a store while keeping the store itself.</p>
-            
+
             <h3>Data Operations</h3>
             <div class="block-preview">
                 store in [store] key [key] value [value]
             </div>
             <p>Saves data with a specific key for later retrieval.</p>
-            
+
             <div class="block-preview">
                 get from [store] key [key]
             </div>
             <p>Retrieves previously stored data (reporter block).</p>
         </div>
     </section>
-    
+
     <section id="examples">
         <div class="container">
             <h2>Example Projects</h2>
-            
+
             <div class="example">
                 <h3>Game Save System</h3>
                 <div class="code-block">
-when green flag clicked
-open database "game_saves" version 1
+when green flag clicked<br>
+open database "game_saves" version 1<br>
 wait until &lt;not &lt;(current database) = [null]>> // Wait for DB to load
                 </div>
-                
                 <div class="code-block">
-when [s v] key pressed // Save game
-store in "player" key "level" value (level)
-store in "player" key "score" value (score)
+when [s v] key pressed // Save game<br>
+store in "player" key "level" value (level)<br>
+store in "player" key "score" value (score)<br>
 store in "player" key "inventory" value (inventory)
                 </div>
-                
                 <div class="code-block">
-when [l v] key pressed // Load game
-set [level] to (get from "player" key "level")
-set [score] to (get from "player" key "score")
+when [l v] key pressed // Load game<br>
+set [level] to (get from "player" key "level")<br>
+set [score] to (get from "player" key "score")<br>
 set [inventory] to (get from "player" key "inventory")
                 </div>
             </div>
-            
+
             <div class="example">
                 <h3>User Preferences</h3>
                 <div class="code-block">
-when green flag clicked
+when green flag clicked<br>
 open database "settings" version 1
                 </div>
-                
                 <div class="code-block">
-when [volume v] slider changed // Save volume
+when [volume v] slider changed // Save volume<br>
 store in "prefs" key "volume" value (volume)
                 </div>
-                
                 <div class="code-block">
-when I receive [load settings]
-set [volume] to (get from "prefs" key "volume")
+when I receive [load settings]<br>
+set [volume] to (get from "prefs" key "volume")<br>
 set [theme] to (get from "prefs" key "theme")
                 </div>
             </div>
         </div>
     </section>
-    
+
     <section>
         <div class="container">
             <h2>Frequently Asked Questions</h2>
-            
+
             <div class="example">
                 <h3>Where is the data stored?</h3>
                 <p>Data is stored in the browser's IndexedDB system, which persists even after closing the browser.</p>
             </div>
-            
+
             <div class="example">
                 <h3>Is there a storage limit?</h3>
                 <p>Most browsers allow up to 50% of disk space, but exact limits vary by browser and device.</p>
             </div>
-            
+
             <div class="example">
                 <h3>Can I share data between different projects?</h3>
                 <p>Yes, if they use the same database name and are hosted on the same domain.</p>
             </div>
         </div>
     </section>
-    
+
     <footer>
         <div class="container">
             <p>IndexedDB Extension for TurboWarp</p>
@@ -678,7 +459,7 @@ set [theme] to (get from "prefs" key "theme")
             <p>Free to use and modify</p>
         </div>
     </footer>
-    
+
     <script>
         // This would contain the actual extension code
         const extensionCode = `class IndexedDBExtension {
@@ -1035,7 +816,7 @@ Scratch.extensions.register(new IndexedDBExtension());`;
 
         // Display the code in the code block
         document.getElementById('full-code').textContent = extensionCode;
-        
+
         // Copy functionality
         function copyCode() {
             navigator.clipboard.writeText(extensionCode).then(() => {
