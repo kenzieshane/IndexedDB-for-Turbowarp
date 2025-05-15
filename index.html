@@ -375,18 +375,6 @@ set [theme] to (get from "prefs" key "theme")
     <script>
         // This would contain the actual extension code
         const extensionCode = `class IndexedDBExtension {
-    constructor(runtime) {
-        this.runtime = runtime;
-        this.databases = {};
-        this.currentDB = null;
-    }
-
-    getInfo() {
-        return {
-            id: 'indexeddb',
-            name: 'IndexedDB',
-            blocks: [
-            class IndexedDBExtension {
   constructor(runtime) {
     this.runtime = runtime;
     this.databases = {};
@@ -736,14 +724,7 @@ set [theme] to (get from "prefs" key "theme")
   }
 }
 
-Scratch.extensions.register(new IndexedDBExtension());
-            ]
-        };
-    }
-
-    // All the methods would be here
-    // (Full implementation from previous messages)
-}`;
+Scratch.extensions.register(new IndexedDBExtension());`;
 
         // Display the code in the code block
         document.getElementById('full-code').textContent = extensionCode;
