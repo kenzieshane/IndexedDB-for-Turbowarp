@@ -1,13 +1,18 @@
 # **IndexedDB Extension for TurboWarp**  
 **Complete Persistent Storage Solution**  
-**WARNING: Don't Change the "default" store value! Instead, modify the key and the data inside it, For now, usinother store than default won't work. **  
+**WARNING: Don't Change the "default" store value! Instead, modify the key and the data inside it, For now, usinother store than default won't work. Needs to be run unsandboxed!**  
+---
+## This extension allows your Scratch projects to **save, load, and manage structured data** using **IndexedDB**, a browser-based NoSQL database. Perfect for:  
 
-This extension allows your Scratch projects to **save, load, and manage structured data** using **IndexedDB**, a browser-based NoSQL database. Perfect for:  
 ✔️ **Game saves** (high scores, player progress)  
 ✔️ **User preferences** (settings, themes)  
 ✔️ **Offline data storage** (notes, lists, app data)  
 ---
+# Installation
 
+download the extension on this github release page, then go to turbowarp and open your project, add extension, custom extensions, add by files, then import the extension that you've just downloaded. 
+
+---
 ## 📖 **Quick Documentation**  
 
 ### 🔹 **1. Setup & Initialization**  
