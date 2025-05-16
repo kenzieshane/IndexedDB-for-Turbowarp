@@ -1,82 +1,93 @@
 # **IndexedDB Extension for TurboWarp**  
-**A powerful database system for Scratch projects!**  
-
-This extension allows your Scratch projects to **save, load, and manage structured data** using **IndexedDB**, a browser-based NoSQL database. Perfect for:  
-✔️ **Game saves** (high scores, player progress)  
-✔️ **User preferences** (settings, themes)  
-✔️ **Offline data storage** (notes, lists, app data)  
+**Complete Persistent Storage Solution**  
 
 ---
 
-## **📖 Quick Documentation**  
+## 📖 **Quick Documentation**  
 
-### **🔹 1. Database Management**  
+### 🔹 **1. Setup & Initialization**  
 | Block | Description | Example |
 |--------|-------------|---------|
-| **`open database [name] version [1]`** | Opens (or creates) a database | `open database "game_saves" version 1` |
-| **`delete entire database [name]`** | Permanently deletes a database | `delete entire database "old_data"` |
-| **`list all databases`** (reporter) | Lists all available databases | `set [dbs] to (list all databases)` |
+| **`initialize persistent storage`** | Prepares database (run once at start) | `when green flag clicked`<br>`initialize persistent storage :: extension` |
 
 ---
 
-### **🔹 2. Store (Table) Management**  
+### 🔹 **2. Saving & Loading Data**  
 | Block | Description | Example |
 |--------|-------------|---------|
-| **`create store [name] with options [options]`** | Creates a new store (table) | `create store "players" with options "keyPath: 'id'"` |
-| **`delete store [name]`** | Deletes a store | `delete store "temp_data"` |
-| **`list all stores in current database`** (reporter) | Lists all stores | `set [stores] to (list all stores)` |
-| **`clear ALL records in [store]`** | Removes all data (keeps store) | `clear ALL records in "highscores"` |
-| **`count records in [store]`** (reporter) | Returns number of records | `set [count] to (count records in "items")` |
+| **`save in [store] key [key] value [value]`** | Stores any data (JSON recommended) | `save in "game" key "player1" value "{\"score\":100}"` |
+| **`load from [store] key [key]`** (reporter) | Retrieves saved data | `set [data] to (load from "game" key "player1")` |
 
 ---
 
-### **🔹 3. Data Operations**  
+### 🔹 **3. Key Management**  
 | Block | Description | Example |
 |--------|-------------|---------|
-| **`store in [store] key [key] value [value]`** | Saves data | `store in "settings" key "volume" value "80"` |
-| **`get from [store] key [key]`** (reporter) | Retrieves data | `set [volume] to (get from "settings" key "volume")` |
+| **`delete from [store] key [key]`** | Removes specific data | `delete from "game" key "tempScore"` |
+| **`list all keys in [store]`** (reporter) | Returns all keys as JSON array | `set [keys] to (list all keys in "game")` |
+| **`clear all data`** | Wipes entire database | `when [r v] key pressed`<br>`clear all data` |
 
 ---
 
-## **🚀 Example Project: Save & Load Game Data**  
+## 💾 **Storage Advantages vs localStorage**  
+| Feature | IndexedDB | localStorage |
+|---------|-----------|--------------|
+| **Capacity** | 50% of disk space (GBs possible) | 5-10MB max |
+| **Data Types** | Objects, arrays, binary data | Only strings |
+| **Performance** | Indexed (fast queries) | Linear scan |
+| **Organization** | Multiple stores/tables | Single flat store |
 
-### **1. Setup Database**  
+---
+
+## 🚀 **Example: Game Save System**  
 ```scratch
 when green flag clicked
-open database "game_saves" version 1
-wait until <not <(current database) = [null]>> // Wait for DB to load
-```
+initialize persistent storage :: extension
 
-### **2. Save Player Progress**  
-```scratch
 when [s v] key pressed
-store in "players" key "level" value (current level)
-store in "players" key "score" value (score)
-```
+save in "saves" key "progress" value "{
+  \"level\":5, 
+  \"items\":[\"sword\",\"potion\"]
+}" :: extension
 
-### **3. Load Player Progress**  
-```scratch
 when [l v] key pressed
-set [current level] to (get from "players" key "level")
-set [score] to (get from "players" key "score")
-```
-
-### **4. Clear Data (Reset Game)**  
-```scratch
-when [r v] key pressed
-clear ALL records in "players"
+set [save] to (load from "saves" key "progress" :: extension)
 ```
 
 ---
 
-## **⚠️ Important Notes**  
-- **Data is saved per browser & domain** (different browsers won’t share data).  
-- **Storage limits vary** (usually **50% of disk space**, but check browser policies).  
-- **Works offline** (great for PWAs!).  
+## 💡 **Pro Tips**  
+1. **Use JSON** for complex data:  
+   ```scratch
+   save in "game" key "settings" value "{
+     \"volume\":80,
+     \"controls\":\"wasd\"
+   }"
+   ```
+   
+2. **Check key existence**:  
+   ```scratch
+   if <(list all keys in "saves" :: extension) contains ["progress"]> then
+     load data :: extension
+   end
+   ```
+
+3. **Default store name**: `"default"` (created automatically)
 
 ---
 
-## **🔧 Need More Help?**  
-- **Try the blocks in TurboWarp** (load the extension via URL).  
-- **Check browser console** (`F12` → Console) for errors.  
+## 🌐 **Browser Support**  
+Works in all modern browsers (Chrome, Firefox, Edge, Safari). Data persists across:  
+✔️ Page refreshes  
+✔️ Browser restarts  
+✔️ Computer reboots  
 
+*(Note: Private/Incognito mode may clear data)*  
+
+---
+
+Need more help? Try:  
+- `F12 → Application → IndexedDB` (to debug)  
+- Right-click blocks → "help" in TurboWarp  
+
+Happy coding! 🎮💾
