@@ -21,31 +21,6 @@ download the extension on this github release page, then go to turbowarp and ope
 
 ---
 
-ress" :: extension)
-```
-
----
-
-## 💡 **Pro Tips**  
-1. **Use JSON** for complex data:  
-   ```scratch
-   save in "game" key "settings" value "{
-     \"volume\":80,
-     \"controls\":\"wasd\"
-   }"
-   ```
-   
-2. **Check key existence**:  
-   ```scratch
-   if <(list all keys in "saves" :: extension) contains ["progress"]> then
-     load data :: extension
-   end
-   ```
-
-3. **Default store name**: `"default"` (created automatically)
-
----
-
 ## 🌐 **Browser Support**  
 Works in all modern browsers (Chrome, Firefox, Edge, Safari). Data persists across:  
 ✔️ Page refreshes  
