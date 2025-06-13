@@ -1,43 +1,15 @@
-# **IndexedDB Extension for TurboWarp**  
-**Complete Persistent Storage Solution**  
-WARNING: Don't Change the "default" store value! Instead, modify the key and the data inside it, For now, usinother store than default won't work. Needs to be run unsandboxed!* 
+# **IndexedDB Extension for TurboWarp, Complete Persistent Storage Solution**  
+*Warning: won't work well with Apple devices, since apple have a different storage limit policy for IndexedDB. Needs to be run unsandboxed!* 
 ---
 ## This extension allows your Scratch projects to **save, load, and manage structured data** using **IndexedDB**, a browser-based NoSQL database. Perfect for:  
 
-✔️ **Game saves** (high scores, player progress)  
-✔️ **User preferences** (settings, themes)  
-✔️ **Offline data storage** (notes, lists, app data)  
+- **Game saves** (high scores, player progress)  
+- **User preferences** (settings, themes)  
+- **Offline data storage** (notes, lists, app data)  
 ---
 # Installation
 
 download the extension on this github release page, then go to turbowarp and open your project, add extension, custom extensions, add by files, then import the extension that you've just downloaded. 
-
----
-## 📖 **Quick Documentation**  
-
-### 🔹 **1. Setup & Initialization**  
-| Block | Description | Example |
-|--------|-------------|---------|
-| **`initialize persistent storage`** | Prepares database (run once at start) | `when green flag clicked`<br>`initialize persistent storage :: extension` |
-
----
-
-### 🔹 **2. Saving & Loading Data**  
-| Block | Description | Example |
-|--------|-------------|---------|
-| **`save in [store] key [key] value [value]`** | Stores any data (JSON recommended) | `save in "game" key "player1" value "{\"score\":100}"` |
-| **`load from [store] key [key]`** (reporter) | Retrieves saved data | `set [data] to (load from "game" key "player1")` |
-
----
-
-### 🔹 **3. Key Management**  
-| Block | Description | Example |
-|--------|-------------|---------|
-| **`delete from [store] key [key]`** | Removes specific data | `delete from "game" key "tempScore"` |
-| **`list all keys in [store]`** (reporter) | Returns all keys as JSON array | `set [keys] to (list all keys in "game")` |
-| **`clear all data`** | Wipes entire database | `when [r v] key pressed`<br>`clear all data` |
-
----
 
 ## 💾 **Storage Advantages vs localStorage**  
 | Feature | IndexedDB | localStorage |
@@ -49,19 +21,7 @@ download the extension on this github release page, then go to turbowarp and ope
 
 ---
 
-## 🚀 **Example: Game Save System**  
-```scratch
-when green flag clicked
-initialize persistent storage :: extension
-
-when [s v] key pressed
-save in "saves" key "progress" value "{
-  \"level\":5, 
-  \"items\":[\"sword\",\"potion\"]
-}" :: extension
-
-when [l v] key pressed
-set [save] to (load from "saves" key "progress" :: extension)
+ress" :: extension)
 ```
 
 ---
