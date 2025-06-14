@@ -1,7 +1,10 @@
 # **IndexedDB Extension for TurboWarp, Complete Persistent Storage Solution**  
-*Warning: won't work well with Apple devices, since apple have a different storage limit policy for IndexedDB. Needs to be run unsandboxed!* 
+
+Warning: won't work well with Apple devices, since apple have a different storage limit policy for IndexedDB. Needs to be run unsandboxed!
+This extension allows your Scratch projects to **save, load, and manage structured data** using **IndexedDB**, a browser-based NoSQL database.
+
 ---
-## This extension allows your Scratch projects to **save, load, and manage structured data** using **IndexedDB**, a browser-based NoSQL database. Perfect for:  
+## Perfect for:  
 
 - **Game saves** (high scores, player progress)  
 - **User preferences** (settings, themes)  
@@ -11,7 +14,7 @@
 
 download the extension on this github release page, then go to turbowarp and open your project, add extension, custom extensions, add by files, then import the extension that you've just downloaded. 
 
-## 💾 **Storage Advantages vs localStorage**  
+## **Storage Advantages vs localStorage**  
 | Feature | IndexedDB | localStorage |
 |---------|-----------|--------------|
 | **Capacity** | 50% of disk space (GBs possible) | 5-10MB max |
@@ -21,7 +24,7 @@ download the extension on this github release page, then go to turbowarp and ope
 
 ---
 
-## 🌐 **Browser Support**  
+## **Browser Support**  
 Works in all modern browsers (Chrome, Firefox, Edge, Safari). Data persists across:  
 ✔️ Page refreshes  
 ✔️ Browser restarts  
@@ -36,4 +39,4 @@ Need more help? Try:
 - Right-click blocks → "help" in TurboWarp
 - This new helper extension! https://github.com/kenzieshane/IndexedDB-Helper
 
-Happy coding! 🎮💾
+Happy coding folks.
