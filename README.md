@@ -35,7 +35,7 @@ Works in all modern browsers (Chrome, Firefox, Edge, Safari). Data persists acro
 ---
 
 Need more help? Try:  
-- `F12 → Application → IndexedDB` (to debug)  
+- emailing me: cortadoistheonlyone@gmail.com
 - Right-click blocks → "help" in TurboWarp
 - This new helper extension! https://github.com/kenzieshane/IndexedDB-Helper
 
